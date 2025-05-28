@@ -2,6 +2,7 @@
 using ZXing.Net.Maui.Controls;
 using EscanerQR.View;
 using EscanerQR.Models;
+using System.Text.RegularExpressions;
 
 namespace EscanerQR
 {
@@ -20,33 +21,45 @@ namespace EscanerQR
             string? image = "";
             bool sonidoValido;
 
+
             if (string.IsNullOrEmpty(carnet))
             {
                 DisplayAlert("Campo vacío", "Por favor, ingrese un numero de carné.", "OK");
             }
             else
             {
-                int[]carnetArray = new int[10];
-                
-                
-                ValidarCarnet validarCarnet = new ValidarCarnet();
-                
-                for (int i = 0; i < carnet.Length; i++)
+                if (Regex.IsMatch(carnet, @"^\d+$"))
                 {
-                    carnetArray[i] = int.Parse(carnet[i].ToString());
-                }
+                    int[] carnetArray = new int[10];
 
-                if (carnetArray[9] == validarCarnet.digitoValidacion(carnet))
-                {
-                    //DisplayAlert("Carné válido", "Número de carné válido.", "OK");
-                    valido = "El carnet es valido";
-                    image = "check.png";
-                    sonidoValido = true;
+
+                    ValidarCarnet validarCarnet = new ValidarCarnet();
+
+                    for (int i = 0; i < carnet.Length; i++)
+                    {
+                        carnetArray[i] = int.Parse(carnet[i].ToString());
+                    }
+
+                    if (carnetArray[9] == validarCarnet.digitoValidacion(carnet))
+                    {
+                        //DisplayAlert("Carné válido", "Número de carné válido.", "OK");
+                        valido = "El carnet es valido";
+                        image = "check.png";
+                        sonidoValido = true;
+                    }
+                    else
+                    {
+                        //DisplayAlert("Carné válido", "Número de carné NO válido.", "OK")
+                        valido = "El carnet no es valido";
+                        image = "error.png";
+                        sonidoValido = false;
+                    }
+
+                    
                 }
                 else
                 {
-                    //DisplayAlert("Carné válido", "Número de carné NO válido.", "OK")
-                    valido = "El carnet no es valido";
+                    valido = "El contenido no es valido";
                     image = "error.png";
                     sonidoValido = false;
                 }
