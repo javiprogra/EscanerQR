@@ -2,13 +2,49 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
-             x:Class="EscanerQR.MainPage">
+             x:Class="EscanerQR.MainPage"
+             Title="Escanear Carné Universitario">
 
-    <zxing:CameraBarcodeReaderView 
-    x:Name="cameraBarcodeReaderView"
-    IsDetecting="True"
-    BarcodesDetected="OnBarcodeDetected"
-    HorizontalOptions="Fill"
-    VerticalOptions="Fill" />
+    <VerticalStackLayout Padding="20" Spacing="15">
+
+        <Image
+               Source="logomeso.png"
+               HeightRequest="185"
+               Aspect="AspectFit" />
+        <Label Text=""
+                FontSize="2"
+                HorizontalOptions="Center" />
+        
+        <Label Text="Ingrese el número de carné o escanee el código QR"
+               FontSize="20"
+               HorizontalOptions="Center" />
+        
+
+        <!--Ingreso del carnet-->
+        <Entry x:Name="carnetEntry"
+               Placeholder="Carné universitario"
+               WidthRequest="250"
+               HeightRequest="50"
+               FontSize="18"
+               Keyboard="Numeric" />
+
+        <!--Botón de validación-->
+        <Button Text="Validar Carné"
+                FontSize="16"
+                Clicked="OnValidarCarnetManualClicked"
+                BackgroundColor="LightGreen"
+                />
+
+        <!--Botón para escanear QR-->
+        <Button Text="Escanear QR"
+                FontSize="16"
+                Clicked="OnEscanearQRClicked"
+                BackgroundColor="LightGreen"/>
+
+        
+
+    </VerticalStackLayout>
+
 
 </ContentPage>
+    
